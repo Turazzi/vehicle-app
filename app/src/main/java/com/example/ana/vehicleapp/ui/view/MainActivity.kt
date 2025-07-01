@@ -1,4 +1,4 @@
-package com.example.ana.vehicleapp.view
+package com.example.ana.vehicleapp.ui.view
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
