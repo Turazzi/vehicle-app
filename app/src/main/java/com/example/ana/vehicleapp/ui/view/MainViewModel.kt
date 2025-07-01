@@ -1,4 +1,10 @@
 package com.example.ana.vehicleapp.ui.view
 
-class MainViewModel {
+import androidx.lifecycle.ViewModel
+import com.example.ana.vehicleapp.data.repository.VehicleRepository
+
+class MainViewModel (private val repository: VehicleRepository) : ViewModel() {
+
+
+
 }
