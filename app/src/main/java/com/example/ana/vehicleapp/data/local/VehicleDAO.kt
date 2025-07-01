@@ -20,6 +20,6 @@ interface VehicleDAO {
     suspend fun getAll(): List<Vehicle>
 
     @Query("DELETE FROM vehicles WHERE id = :vehicleId")
-    suspend fun delete(vehicleId: Int)
+    suspend fun deleteById(vehicleId: Int)
 
 }
