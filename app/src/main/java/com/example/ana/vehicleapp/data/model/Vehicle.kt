@@ -32,6 +32,6 @@ data class Vehicle (
     val motorization: String,
 
     @SerializedName("year")
-    val your: Int
+    val year: Int
 
 ) : Parcelable
