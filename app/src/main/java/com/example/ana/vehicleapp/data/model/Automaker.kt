@@ -14,6 +14,6 @@ data class Automaker (
     @SerializedName("id")
     val id: Int,
 
-    @SerializedName("name")
+    @SerializedName("nome")
     val name: String
 ) : Parcelable
