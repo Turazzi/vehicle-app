@@ -2,4 +2,5 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-</resources>
+
+    <color name="car_background_dark">#121212</color> <color name="car_surface_dark">#1E1E1E</color> <color name="car_text_primary">#E0E0E0</color> <color name="car_text_secondary">#A0A0A0</color> <color name="car_accent_red">#D32F2F</color> </resources>
