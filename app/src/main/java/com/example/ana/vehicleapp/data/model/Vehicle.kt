@@ -18,7 +18,7 @@ import kotlinx.parcelize.Parcelize
     )]
 )
 data class Vehicle (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     val id: Int,
 

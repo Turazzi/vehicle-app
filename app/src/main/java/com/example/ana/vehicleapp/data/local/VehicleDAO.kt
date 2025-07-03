@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.ana.vehicleapp.data.model.Vehicle
 import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 
@@ -28,5 +29,8 @@ interface VehicleDAO {
     INNER JOIN automakers as a ON v.automakerId = a.id
     """)
     suspend fun getVehiclesWithAutomaker(): List<VehicleWithAutomaker>
+
+    @Update
+    suspend fun update(vehicle: Vehicle)
 
 }

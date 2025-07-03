@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ana.vehicleapp.R
@@ -44,6 +45,8 @@ class VehicleAdapter(
         private val modelTextView: TextView = itemView.findViewById(R.id.text_view_model)
         private val automakerTextView: TextView = itemView.findViewById(R.id.text_view_automaker)
         private val detailsTextView: TextView = itemView.findViewById(R.id.text_view_details)
+        private val carIcon: ImageView = itemView.findViewById(R.id.icon_car)
+
 
         init {
             itemView.setOnCreateContextMenuListener(this)
