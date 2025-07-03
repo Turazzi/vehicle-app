@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.ana.vehicleapp.data.model.Vehicle
-
+import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 
 @Dao
 interface VehicleDAO {
@@ -21,5 +21,12 @@ interface VehicleDAO {
 
     @Query("DELETE FROM vehicles WHERE id = :vehicleId")
     suspend fun deleteById(vehicleId: Int)
+
+    @Query("""
+    SELECT v.*, a.name as automakerName
+    FROM vehicles as v
+    INNER JOIN automakers as a ON v.automakerId = a.id
+    """)
+    suspend fun getVehiclesWithAutomaker(): List<VehicleWithAutomaker>
 
 }

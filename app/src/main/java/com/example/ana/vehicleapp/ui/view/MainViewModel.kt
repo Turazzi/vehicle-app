@@ -6,13 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.example.ana.vehicleapp.data.model.Vehicle
 import com.example.ana.vehicleapp.data.repository.VehicleRepository
 import androidx.lifecycle.viewModelScope
+import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 import kotlinx.coroutines.launch
 
 
 class MainViewModel (private val repository: VehicleRepository) : ViewModel() {
 
-    private val _vehicles = MutableLiveData<List<Vehicle>>()
-    val vehicles: LiveData<List<Vehicle>> = _vehicles
+    private val _vehicles = MutableLiveData<List<VehicleWithAutomaker>>()
+    val vehicles: LiveData<List<VehicleWithAutomaker>> = _vehicles
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -25,21 +26,20 @@ class MainViewModel (private val repository: VehicleRepository) : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val vehicleList = repository.syncAndGetVehicles()
+                val vehicleList = repository.syncAndGetVehiclesWithAutomaker()
                 _vehicles.postValue(vehicleList)
-            }
-            catch (e:Exception) {
+            } catch (e: Exception) {
                 _vehicles.postValue(emptyList())
-            }
-            finally {
+            } finally {
                 _isLoading.value = false
             }
         }
     }
 
-    fun deleteVehicle(vehicle: Vehicle) {
+
+    fun deleteVehicle(vehicleWithAutomaker: VehicleWithAutomaker) {
         viewModelScope.launch {
-            repository.deleteVehicle(vehicle.id)
+            repository.deleteVehicle(vehicleWithAutomaker.vehicle.id)
             refreshVehicles()
         }
     }

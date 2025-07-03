@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.ana.vehicleapp.data.local.AutomakerDAO
 import com.example.ana.vehicleapp.data.local.VehicleDAO
 import com.example.ana.vehicleapp.data.model.Vehicle
+import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 import com.example.ana.vehicleapp.data.remote.ApiService
 
 class VehicleRepository (
@@ -12,28 +13,26 @@ class VehicleRepository (
     private val automakerDao: AutomakerDAO
 ) {
 
-    suspend fun syncAndGetVehicles(): List<Vehicle> {
-
+    suspend fun syncAndGetVehiclesWithAutomaker(): List<VehicleWithAutomaker> {
         try {
             val vehicleResponse = apiService.getVehicles()
-            val automakerRespose = apiService.getAutomakers()
+            val automakerResponse = apiService.getAutomakers()
 
-            if (vehicleResponse.isSuccessful && automakerRespose.isSuccessful) {
+            if (vehicleResponse.isSuccessful && automakerResponse.isSuccessful) {
                 val vehicles = vehicleResponse.body()
-                val automakers = automakerRespose.body()
+                val automakers = automakerResponse.body()
 
                 if (vehicles != null && automakers != null) {
                     automakerDao.insertAll(automakers)
                     vehicleDao.insertAll(vehicles)
-                    Log.d("VehicleRepository", "Data synced from API sucessfully")
+                    Log.d("VehicleRepository", "Data synced from API successfully.")
                 }
-
             }
         } catch (e: Exception) {
             Log.e("VehicleRepository", "Failed to sync data from API", e)
         }
 
-        return vehicleDao.getAll()
+        return vehicleDao.getVehiclesWithAutomaker()
     }
 
     suspend fun insertVehicle(vehicle: Vehicle) {
