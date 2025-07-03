@@ -22,16 +22,16 @@ data class Vehicle (
     @SerializedName("id")
     val id: Int,
 
-    @SerializedName("model")
+    @SerializedName("modelo")
     val model: String,
 
-    @SerializedName("automakerId")
+    @SerializedName("id_montadora")
     val automakerId: Int,
 
-    @SerializedName("motorization")
+    @SerializedName("motorizacao")
     val motorization: String,
 
-    @SerializedName("year")
+    @SerializedName("ano")
     val year: Int
 
 ) : Parcelable
