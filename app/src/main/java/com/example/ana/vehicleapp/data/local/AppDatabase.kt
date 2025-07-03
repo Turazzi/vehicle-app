@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.ana.vehicleapp.data.model.Automaker
 import com.example.ana.vehicleapp.data.model.Vehicle
 
-@Database(entities = [Automaker::class, Vehicle::class], version = 1)
+@Database(entities = [Automaker::class, Vehicle::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun automakerDao(): AutomakerDAO
