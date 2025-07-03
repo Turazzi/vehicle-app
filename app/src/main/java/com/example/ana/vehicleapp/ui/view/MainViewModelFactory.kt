@@ -17,7 +17,9 @@ class MainViewModelFactory (private val context: Context) : ViewModelProvider.Fa
             val db = Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "vehicle-database"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
 
             val vehicleDao = db.vehicleDao()
             val automakerDao = db.automakerDao()
