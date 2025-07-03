@@ -3,11 +3,12 @@ package com.example.ana.vehicleapp.data.repository
 import android.util.Log
 import com.example.ana.vehicleapp.data.local.AutomakerDAO
 import com.example.ana.vehicleapp.data.local.VehicleDAO
+import com.example.ana.vehicleapp.data.model.Automaker
 import com.example.ana.vehicleapp.data.model.Vehicle
 import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 import com.example.ana.vehicleapp.data.remote.ApiService
 
-class VehicleRepository (
+class VehicleRepository(
     private val apiService: ApiService,
     private val vehicleDao: VehicleDAO,
     private val automakerDao: AutomakerDAO
@@ -35,6 +36,14 @@ class VehicleRepository (
         return vehicleDao.getVehiclesWithAutomaker()
     }
 
+    suspend fun getAllAutomakers(): List<Automaker> {
+        return automakerDao.getAll()
+    }
+
+    suspend fun updateVehicle(vehicle: Vehicle) {
+        vehicleDao.update(vehicle)
+    }
+
     suspend fun insertVehicle(vehicle: Vehicle) {
         vehicleDao.insert(vehicle)
     }
@@ -43,4 +52,7 @@ class VehicleRepository (
         vehicleDao.deleteById(vehicleId)
     }
 
+    suspend fun getLocalVehiclesWithAutomaker(): List<VehicleWithAutomaker> {
+        return vehicleDao.getVehiclesWithAutomaker()
+    }
 }
