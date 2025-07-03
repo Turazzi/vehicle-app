@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 import com.example.ana.vehicleapp.data.repository.VehicleRepository
+import com.example.ana.vehicleapp.util.Result 
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: VehicleRepository) : ViewModel() {
@@ -16,21 +17,38 @@ class MainViewModel(private val repository: VehicleRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
+
+
     init {
+        syncData()
+    }
+
+    private fun syncData() {
         viewModelScope.launch {
             _isLoading.value = true
-            try {
-                val localData = repository.getLocalVehiclesWithAutomaker()
-                if (localData.isEmpty()) {
-                    _vehicles.postValue(repository.syncAndGetVehiclesWithAutomaker())
-                } else {
-                    _vehicles.postValue(localData)
+            val localData = repository.getLocalVehiclesWithAutomaker()
+            if (localData.isEmpty()) {
+                when (val result = repository.syncAndGetVehiclesWithAutomaker()) {
+                    is Result.Success -> {
+                        _vehicles.postValue(result.data)
+                        _error.postValue(null)
+                    }
+                    is Result.Error -> {
+                        _error.postValue("Falha ao carregar dados. Verifique sua conexão.")
+                    }
+                    is Result.Loading -> {
+
+                    }
                 }
-            } finally {
-                _isLoading.value = false
+            } else {
+                _vehicles.postValue(localData)
             }
+            _isLoading.value = false
         }
     }
+
 
     fun refreshLocalList() {
         viewModelScope.launch {

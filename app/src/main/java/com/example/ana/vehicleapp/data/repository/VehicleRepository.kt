@@ -7,6 +7,7 @@ import com.example.ana.vehicleapp.data.model.Automaker
 import com.example.ana.vehicleapp.data.model.Vehicle
 import com.example.ana.vehicleapp.data.model.VehicleWithAutomaker
 import com.example.ana.vehicleapp.data.remote.ApiService
+import com.example.ana.vehicleapp.util.Result
 
 class VehicleRepository(
     private val apiService: ApiService,
@@ -14,8 +15,8 @@ class VehicleRepository(
     private val automakerDao: AutomakerDAO
 ) {
 
-    suspend fun syncAndGetVehiclesWithAutomaker(): List<VehicleWithAutomaker> {
-        try {
+    suspend fun syncAndGetVehiclesWithAutomaker(): Result<List<VehicleWithAutomaker>> {
+        return try {
             val vehicleResponse = apiService.getVehicles()
             val automakerResponse = apiService.getAutomakers()
 
@@ -29,11 +30,11 @@ class VehicleRepository(
                     Log.d("VehicleRepository", "Data synced from API successfully.")
                 }
             }
+            Result.Success(vehicleDao.getVehiclesWithAutomaker())
         } catch (e: Exception) {
             Log.e("VehicleRepository", "Failed to sync data from API", e)
+            Result.Error(e)
         }
-
-        return vehicleDao.getVehiclesWithAutomaker()
     }
 
     suspend fun getAllAutomakers(): List<Automaker> {
